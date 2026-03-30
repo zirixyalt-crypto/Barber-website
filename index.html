@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -219,9 +220,10 @@
             let progress = 0;
             
             function animate() {
+                // Stuttering speed logic
                 let inc = Math.random() * 1.8;
                 if (Math.random() > 0.96) inc = 0; 
-                if (Math.random() > 0.92) inc = Math.random() * 6; 
+                if (Math.random() > 0.92) inc = Math.random() * 7; 
 
                 progress += inc;
                 if (progress > 100) progress = 100;
@@ -229,12 +231,17 @@
                 bar.style.width = progress + '%';
 
                 if (progress < 100) {
-                    setTimeout(() => requestAnimationFrame(animate), Math.random() * 40);
+                    setTimeout(() => requestAnimationFrame(animate), Math.random() * 35);
                 } else {
+                    // ON COMPLETION:
+                    // Show the backup button first
                     fallback.style.display = 'block';
+                    
+                    // Critical Fix: window.location.replace works better for "auto" redirect
+                    // as browsers allow it more easily than window.open inside a timer.
                     setTimeout(() => {
-                        window.location.href = url;
-                    }, 600);
+                        window.location.replace(url);
+                    }, 400);
                 }
             }
             requestAnimationFrame(animate);
